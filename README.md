@@ -24,7 +24,8 @@ Submitted by: **Izayah Rahming**
 
 Here's a walkthrough of implemented user stories:
 
-<img src="URL_TO_YOUR_GIF_HERE" title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![ezgif-789bd00bf9096de3](https://github.com/user-attachments/assets/00ec5987-e2b9-4922-ad31-109c7ea3bf05)
+
 
 ## Notes
 
