@@ -18,9 +18,10 @@ Submitted by: **Izayah Rahming**
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented user stories:
+Here's a walkthrough of the new changes to LeafyLife:
 
-<img src="URL_TO_YOUR_NEW_GIF_HERE" title='Video Walkthrough' width='' alt='Video Walkthrough' />
+![ezgif-107771420c178cc9](https://github.com/user-attachments/assets/8d4c1f09-7695-4d4c-9ccb-aecbe83cfb4c)
+
 
 ## Notes
 Refactored the Unit 1 project to use an Express backend connected to a PostgreSQL database. Implemented a seed script to programmatically build and populate the database schema.
