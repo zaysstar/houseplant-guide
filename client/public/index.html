@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌿 LeafyLife | Houseplant Guide</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <style>
+    :root {
+        --primary: #2e7d32;
+        --primary-hover: #1b5e20;
+    }
+    
+    body { background-color: #f1f8e9; }
+
+    .hero {
+    position: relative;
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    color: white;
+    margin-bottom: 4rem;
+    border-radius: 0 0 3rem 3rem; /* Rounded bottom corners */
+}
+
+    /* The background image with a zoom animation */
+    .hero::before {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                    url('https://images.unsplash.com/photo-1470058869958-2a77a6a7bb16?auto=format&fit=crop&w=1200&q=80');
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+        animation: slowZoom 20s infinite alternate;
+    }
+
+    @keyframes slowZoom {
+        from { transform: scale(1); }
+        to { transform: scale(1.1); }
+    }
+
+    /* The "Glassmorphism" Content Box */
+    .hero-content {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 2.5rem 4rem;
+        border-radius: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    }
+
+    .hero-content h1 {
+        font-size: 4rem;
+        margin-bottom: 0.5rem;
+        font-weight: 800;
+        letter-spacing: -1px;
+
+        background: linear-gradient(to right, #1b5e20, #81c784, #1b5e20);
+        -webkit-background-clip: text;
+        
+        -webkit-text-fill-color: transparent;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        font-weight: 300;
+        margin: 0;
+    }
+
+    /* Target the grid to be exactly 3 columns on desktops */
+    #plant-list.grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* Forces 3 columns */
+        gap: 2rem; /* Increases spacing between cards */
+    }
+
+    /* Responsive adjustment for tablets/phones */
+    @media (max-width: 992px) {
+        #plant-list.grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    @media (max-width: 600px) {
+        #plant-list.grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .plant-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        border: none;
+        background: white;
+        padding: 0; /* Let image fill the top */
+        border-radius: 1rem;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        height: 100%; /* Ensures all cards in a row are same height */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .plant-card:hover {
+        transform: translateY(-12px);
+        box-shadow: 0 20px 30px rgba(0,0,0,0.15);
+    }
+
+    .card-image {
+        height: 300px; /* Made the image taller */
+        width: 100%;
+        object-fit: cover;
+        border-radius: 1rem 1rem 0 0;
+    }
+
+    .card-content {
+        padding: 1.5rem;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .difficulty-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        background: #e8f5e9;
+        color: var(--primary);
+        margin-bottom: 0.75rem;
+    }
+
+    .search-container {
+    margin-top: -2.5rem; /* Pulls the search bar up into the hero area */
+    position: relative;
+    z-index: 10;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3rem;
+    }
+
+    #search-input {
+        height: 60px;
+        border-radius: 50px;
+        padding-left: 2rem;
+        border: none;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        font-size: 1.1rem;
+    }
+
+    #search-input:focus {
+        border-color: var(--primary);
+    }
+
+    @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+    body {
+        animation: fadeIn 0.6s ease-out;
+    }
+    
+    </style>
+</head>
+
+<body>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>LeafyLife</h1>
+            <p>Your digital greenhouse for indoor plant mastery.</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="🔍 Search by name or difficulty (e.g., 'Easy')..." oninput="filterPlants()">
+        </div>
+        <div id="plant-list" class="grid">
+            </div>
+    </main>
+
+    <script>
+        let allPlants = []; // Global variable to store our database results
+
+        async function loadPlants() {
+            const response = await fetch('/api/plants');
+            allPlants = await response.json(); // Save the data here
+            renderPlants(allPlants); // Call a new function to draw the cards
+        }
+
+        function renderPlants(plantsToDisplay) {
+            const list = document.getElementById('plant-list');
+            
+            if (plantsToDisplay.length === 0) {
+                list.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                        <span style="font-size: 4rem;">🥀</span>
+                        <h3>No plants found...</h3>
+                        <p>Try searching for "Easy" or "Monstera" instead.</p>
+                        <button onclick="document.getElementById('search-input').value=''; filterPlants();" class="outline">Clear Search</button>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = plantsToDisplay.map(plant => `
+                <article class="plant-card" onclick="window.location.href='/plants/${plant.id}'">
+                    <img src="${plant.image}" alt="${plant.name}" class="card-image">
+                    <div class="card-content">
+                        <div>
+                            <span class="difficulty-badge">${plant.difficulty}</span>
+                            <h3 style="margin: 0; color: #1b5e20;">${plant.name}</h3>
+                            <p style="font-style: italic; color: #666; font-size: 0.9rem;">${plant.scientific_name}</p>
+                        </div>
+                        <footer style="margin-top: 1rem; padding: 0; background: transparent; border: none;">
+                            <button class="outline" style="width: 100%; border-color: var(--primary); color: var(--primary);">
+                                View Care Details
+                            </button>
+                        </footer>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function filterPlants() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            
+            const filtered = allPlants.filter(plant => {
+                return plant.name.toLowerCase().includes(query) || 
+                    plant.difficulty.toLowerCase().includes(query) ||
+                    plant.scientific_name.toLowerCase().includes(query);
+            });
+
+            renderPlants(filtered);
+        }
+
+        loadPlants();
+    </script>
+</body>
+</html>

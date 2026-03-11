@@ -71,7 +71,7 @@
 
             const response = await fetch('/api/plants');
             const plants = await response.json();
-            const plant = plants.find(p => p.id === plantId);
+            const plant = plants.find(p => p.id == plantId);
 
             const content = document.getElementById('plant-content');
 
@@ -86,7 +86,7 @@
                             <div class="info-section">
                                 <hgroup>
                                     <h1>${plant.name}</h1>
-                                    <p><i>${plant.scientificName}</i></p>
+                                    <p><i>${plant.scientific_name}</i></p>
                                 </hgroup>
                                 
                                 <div class="care-item">

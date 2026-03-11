@@ -1,34 +1,29 @@
-# Project 1 - LeafyLife: Houseplant Care Guide
+# Project 2 - LeafyLife: Houseplant Guide (Database Edition)
 
-**LeafyLife** is a web app that helps users find the perfect indoor plants and learn how to care for them. It serves a custom backend API and displays the data using a responsive, card-based frontend.
+**LeafyLife** is a full-stack web application that serves houseplant care data from a PostgreSQL database. It features a clean, botanical-themed UI and dynamic search capabilities.
 
 Submitted by: **Izayah Rahming**
 
 ## Application Features
 
 ### Core Features
-
-- [x] The web app uses only HTML, CSS, and JavaScript without a frontend framework
-- [x] The web app displays a title
-- [x] The web app displays at least five unique list items, each with at least three displayed attributes (Name, Scientific Name, Difficulty, Watering Schedule, and Image)
-- [x] The user can click on each item in the list to see a detailed view of it, including all database fields
-- [x] Each detail view is a unique endpoint (e.g., `localhost:3000/plants/monstera`)
-- [x] The web app serves an appropriate 404 page when no matching route is defined
-- [x] The web app is styled using Picocss
+- [x] The web app uses only HTML, CSS, and JavaScript without a frontend framework.
+- [x] The web app is connected to a PostgreSQL database (Vercel Postgres/Neon).
+- [x] Data is retrieved from the database and displayed on the frontend.
+- [x] App structure follows the recommended folder organization (client/server separation).
 
 ### Stretch Features
-
-- [x] The web app displays items in a unique format, using a responsive 3-column CSS Grid of interactive cards with hover animations.
+- [x] **Search functionality:** Users can filter plants by name, scientific name, or difficulty level in real-time.
+- [x] **Custom UI:** Responsive 3-column CSS Grid with hover animations and custom branding.
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src="URL_TO_YOUR_GIF_HERE" title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src="URL_TO_YOUR_NEW_GIF_HERE" title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 ## Notes
-
-Built the backend using Node.js and Express to handle dynamic routing. Leveraged PicoCSS combined with custom CSS for a clean, botanical-themed UI. 
+Refactored the Unit 1 project to use an Express backend connected to a PostgreSQL database. Implemented a seed script to programmatically build and populate the database schema.
 
 ## License
 
